@@ -1,0 +1,32 @@
+int speed1 = 128; // 初始速度值（占空比，0-255）  
+int speed2 = 0; // 初始速度值（占空比，0-255） 
+#define MOTOR_PIN_IN1 5  // 假设连接到 IN1 的引脚是 52（对于 Mega 2560，数字引脚超过 53 的需用模拟引脚号）  
+#define MOTOR_PIN_IN2 6 // 假设连接到 IN2 的引脚是 50  
+#define MOTOR_PIN_ENA 10 // 假设连接到 ENA 的引脚是 51  
+void setup() {  
+  pinMode(MOTOR_PIN_IN1, OUTPUT); // 设置速度控制引脚为输出模式 
+  pinMode(MOTOR_PIN_IN2, OUTPUT); // 设置速度控制引脚为输出模式 
+  pinMode(MOTOR_PIN_ENA, OUTPUT); // 设置速度控制引脚为输出模式
+  digitalWrite(MOTOR_PIN_ENA, HIGH);  
+  
+}  
+  
+void loop() {  
+  // 使用PWM设置电机速度  
+  analogWrite(MOTOR_PIN_IN1, speed1);  
+  analogWrite(MOTOR_PIN_IN2, speed2);   
+  // 这里可以添加代码来改变speed的值，从而改变电机速度  
+  // 例如，可以通过按钮输入、旋钮或模拟传感器输入来改变speed  
+    
+  // 为了演示，我们在这里简单地改变speed的值  
+  if (speed1 < 255) {  
+    speed1 += 5; // 逐渐增加速度  
+  } else {  
+    speed1 = 0; // 达到最大值后重置为0  
+  }  
+    
+  delay(100); // 等待一小段时间后再次调整速度，以避免速度变化过快  
+}  
+  
+// 注意：在实际应用中，你可能需要根据电机的具体需求和电机驱动模块的规格来调整PWM信号的频率和占空比。  
+// 此外，确保你的外部电源能够提供足够的电流和电压来驱动电机和电机驱动模块。
