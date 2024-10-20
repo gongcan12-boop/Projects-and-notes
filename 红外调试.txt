@@ -1,0 +1,35 @@
+#include <SoftwareSerial.h>  
+  
+// 定义红外接收器的引脚  
+const int IR_RECEIVER_PINS[9] = {28, 29, 30, 31, 32, 33, 34, 35, 36};  
+  
+// 设置蓝牙模块连接的串行端口  
+SoftwareSerial bluetoothSerial(10, 11); // RX, TX  
+  
+void setup() {  
+  // 初始化串口通信  
+  Serial.begin(9600);  
+  bluetoothSerial.begin(9600);  
+  
+  // 设置红外接收器引脚为输入模式  
+  for (int i = 0; i < 9; i++) {  
+    pinMode(IR_RECEIVER_PINS[i], INPUT);  
+  }  
+}  
+  
+void loop() {  
+  // 依次检查每个红外接收器是否有信号  
+  for (int i = 0; i < 9; i++) {  
+    if (digitalRead(IR_RECEIVER_PINS[i]) == HIGH) {  
+      // 如果接收器接收到信号  
+      bluetoothSerial.print("IR signal detected on pin: ");  
+      bluetoothSerial.println(IR_RECEIVER_PINS[i]);  
+  
+      // 为了避免连续发送相同的引脚编号，可以添加延时  
+      delay(10);  
+    }  
+  }  
+  
+  // 循环间隔时间，避免过快地检查  
+  delay(90);  
+}
